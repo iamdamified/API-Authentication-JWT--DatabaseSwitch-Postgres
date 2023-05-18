@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from .forms import StudentForm
 from django.http import HttpResponse
+from .models import Student
 # Create your views here.
 
 
@@ -14,6 +15,10 @@ from django.http import HttpResponse
 @permission_classes([IsAuthenticated])
 def api_home_page(request):
     return Response("This is the home page")
+
+
+# class api_home_page(APIView)
+#      permission_classes = [IsAuthenticated]
 
 
 def create_student(request):
@@ -31,6 +36,31 @@ def create_student(request):
             form.save()
             return HttpResponse("your data has been saved")
     return render(request, 'JWTcore/create_student.html')
+
+
+def all_student(request):
+        students = Student.objects.all()
+        context = {
+            'student': students
+        }
+        return render(request, 'JWTcore/all_student.html', context)
+
+def new_registration(request):
+     if request.method == "POST":
+          name = request.POST["name"]
+          email = request.POST["email"]
+          class_code = request.POST["class_code"]
+          course = request.POST["course"]
+
+          Student.objects.create(name=name, email=email, class_code=class_code, course=course)
+
+          return HttpResponse("Nice one")
+     
+     elif request.method == "GET":
+          return render(request, "JWTcore/frontendform.html")
+
+          
+    
     
 
 
