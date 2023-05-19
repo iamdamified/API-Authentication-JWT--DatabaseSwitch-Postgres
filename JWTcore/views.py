@@ -10,13 +10,13 @@ from django.http import HttpResponse
 from .models import Student
 # Create your views here.
 
-
+# This first view is used to define the content of page which is to be displayed in API testing apps(JSON and POSTMAN) and using JWT Authentication
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def api_home_page(request):
     return Response("This is the home page")
 
-
+# This would be used if class or generic method is used in the views.py to display the view
 # class api_home_page(APIView)
 #      permission_classes = [IsAuthenticated]
 
